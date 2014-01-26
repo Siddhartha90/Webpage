@@ -1,0 +1,206 @@
+<h1> Programming Project #1<br>
+</h1>
+
+<h2> - Siddhartha gupta<br>
+</h2>
+
+<h3>Part I: Hybrid Images</h3> 
+
+<h4> Best Hybrid </h4> 
+The following hybrid between White house and Taj mahal turned out pretty well, from close you see the White house, and from a distance you'll see Taj mahal. (Click for larger versions) 
+The White House image is filtered with a laplacian filter, which is simply applying the gaussian filter and then subtracting the resultant image from original, which gives a sharp image as shown. Taj Mahal is filtered using a gaussian filter, blurring it. I tried a lot of different sigmas until I finally had a good result. the trick is to have wide apart cut-off frequencies for the two gaussian filters. If the cut-off frequencies overlap, an unsatisfactory image results as depicted in the MIT paper with the angry man and strict woman. <br> <br>
+
+<table width=10%  cellspacing="55">
+<tr>
+<td width=10% align=center>
+<a href= "white.jpg">
+<img src="white.jpg" height="355" width = "485"  > </a> <br>
+
+<td width=10% align=center>
+<a href= "taj.jpg">
+<img src="taj.jpg" height="355" width = "495" >  </a>
+
+<td width=10% align=center>
+<a href= "taj_blur.jpg">
+<img src="taj_blur.jpg"  >  </a>
+Low Frequency Taj Mahal image
+
+<td width=10% align=center>
+<a href= "whitehouse_sharp.jpg">
+<img src="whitehouse_sharp.jpg"  >  </a> <br>
+High frequency White house image
+
+<td width=10% align=center>
+<a href= "white_taj.PNG">
+<img src="white_taj.PNG"  >  </a> <br>
+Resultant Hybrid
+
+</table>
+
+The log magnitude of the Fourier transform of the two input images, the filtered images, and the hybrid image:
+
+<table width=10%  cellspacing="0">
+<tr>
+<td width=10% align=center>
+<a href= "log_white.jpg">
+<img src="log_white.jpg" height="355" width = "485"  > </a> <br>
+White House FFT
+
+<td width=10% align=center>
+<a href= "log_taj.jpg">
+<img src="log_taj.jpg" height="355" width = "495" >  </a>
+Taj Mahal FFT
+
+<td width=10% align=center>
+<a href= "log_taj_blur.jpg">
+<img src="log_taj_blur.jpg"  >  </a>
+Low Frequency Taj Mahal image FFT
+
+<td width=10% align=center>
+<a href= "log_white_sharp.jpg">
+<img src="log_white_sharp.jpg"  >  </a> <br>
+High frequency White house image FFT
+
+<td width=10% align=center>
+<a href= "log_hybrid.jpg">
+<img src="log_hybrid.jpg"  >  </a> <br>
+Resultant Hybrid FFT
+
+</table>
+
+
+<h4> Another Hybrid </h4> 
+This one turned out alright, although the dog's white color stood out in the background, and the cat's eyes were a bit too prominent. 
+
+
+<table width=10%  cellspacing="10">
+<tr>
+<td width=10% align=center>
+<a href= "kit.jpg">
+<img src="kit.jpg" height="355" width = "485"  > </a> <br>
+
+<td width=10% align=center>
+<a href= "dog.jpg">
+<img src="dog.jpg" height="355" width = "425" >  </a>
+
+<td width=10% align=center>
+<a href= "dog_blur.jpg">
+<img src="dog_blur.jpg"  >  </a>
+Low Frequency Tiger
+
+<td width=10% align=center>
+<a href= "cat_good_sharp.jpg">
+<img src="cat_good_sharp.jpg"  >  </a> <br>
+High frequency Kitten
+
+<td width=10% align=center>
+<a href= "cat_dog_good.jpg">
+<img src="cat_dog_good.jpg"  >  </a> <br>
+Resultant Hybrid
+
+</table>
+
+<h4> Failure Hybrid </h4> 
+This one turned out bad,  the cat's eyes were way to visible. Also the tiger's features was visible too much from close by. If I blurred the tiger more, it looked indistinguishable from afar.
+
+<table width=10%  cellspacing="10">
+<tr>
+<td width=10% align=center>
+<a href= "kit.jpg">
+<img src="kit.jpg" height="355" width = "485"  > </a> <br>
+
+<td width=10% align=center>
+<a href= "tiger.jpg">
+<img src="tiger.jpg" height="355" width = "405" >  </a>
+
+<td width=10% align=center>
+<a href= "tiger_blur.jpg">
+<img src="tiger_blur.jpg"  >  </a>
+Low Frequency Tiger
+
+<td width=10% align=center>
+<a href= "cat_sharp.jpg">
+<img src="cat_sharp.jpg"  >  </a> <br>
+High frequency Kitten
+
+<td width=10% align=center>
+<a href= "cat_tiger.jpg">
+<img src="cat_tiger.jpg"  >  </a> <br>
+Resultant Hybrid
+
+</table>
+
+
+
+<h3>Part II: Image Enhancement</h3>
+
+<b>Contrast Enhancement</b>: I tried Gamma correction and Histogram equalization, for 2 images (have shown one here) and both times Gamma correction seemed to give a better result.
+The clouds seem to have been pixelized due to histogram equalization<br>
+
+<table width=10%  cellspacing="0">
+<tr>
+<td width=10% align=center>
+<a href= "hills.jpg">
+<img src="./hills.jpg"  height="255" width = "335"> </a> <br>
+
+<td width=10% align=center>
+<a href= "hills_gammacorrected.jpg">
+<img src="./hills_gammacorrected.jpg"  height="300" width = "400">  </a>
+Gamma Corrected
+
+<td width=10% align=center>
+<a href= "hills_histeq_strong.jpg">
+<img src="./hills_histeq_strong.jpg"  height="300" width = "430">  </a>
+Strong Histogram equalized
+
+<td width=10% align=center>
+<a href= "hills_histeq.jpg">
+<img src="./hills_histeq.jpg"  height="300" width = "400">  </a>
+Averaged with original picture
+
+</table>
+
+
+<b>Color Enhancement</b>: To make colors brighter and the image more vivid, we convert image to hsv color space, and then increase the saturation, however care must be taken to keep the saturation value between 0 and 1, so we raise it to a power between 0 and 1. 
+<br>
+
+<table width=10%  cellspacing="0">
+<tr>
+<td width=10% align=center>
+<img src="./beckman.jpg"  height="360" width = "450" >  <br>
+
+<td width=10% align=center> <br>
+<img src="beckman_colorenhanced.jpg"  height="470" width = "635">  
+
+</table>
+
+<b>Color Shift</b>: I converted the image to LAB color space, and then to make the image more red I increased <b> 'a' </b> by a certain constant  and to make it less yellow (and therefore more blue) I decreased <b> 'b' </b> by a certain constant (after a bit of experimentation). Then I converted the image back to rgb space. <br> <br>
+
+<table width=10% >
+<tr>
+<td width=10% >
+<a href= "goldengate.jpg">
+<img src="./goldengate.jpg"  width="490" height="350" >  </a>
+
+<td width=10% >
+<a href= "morered.jpg">
+<img src="./morered.jpg"  width="490" height="350">  </a>
+
+<td width=10%>
+<a href= "lessyellow.png">
+<img src="./lessyellow.png"   width="490" height="350">  </a>
+
+
+</table>
+
+<h3> Bells & Whistles </h3>
+
+I did all 3 image enhancement tasks: <b> Color Enhancement, Color Shifting and Contrast Enhancement. </b>
+<br><br>
+
+
+
+
+
+
+

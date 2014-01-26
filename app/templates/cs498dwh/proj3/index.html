@@ -1,0 +1,159 @@
+<h1>Gradient-Domain Fusion </h1> 
+
+<h4> Toy Problem</h4> 
+My error came out to be 0.3451e-13 <br> 
+
+<h4> Poisson & Mixed Blending </h4> 
+The main idea behind fusing of a image into another is that our eyes perceive the overall gradient of an image more than the intensity. Therefore, as long as we can preserve the gradient of the resultant image, the change in intensities does not make it stand out of the target image. To blend an image using the poisson process, the new intensity values 'v' are to be found using the pixel intensities of the source image "s" and of the target image "t". For each pixel, its four neighbors are checked, if a neighbor is outside the mask region, we use the second part of the equation, using the target image, else we use the source image. <br>
+<img src="Capture.PNG"   height="115" width = "855"> <br>
+
+For Mixed blending, we use the gradient in source or target with the larger magnitude as the guide, rather than just the source gradient.
+
+<br><br><img src="Capture2.PNG" height="80" width = "655" > <br>
+
+<br> This was my favorite result. Mixed blending turned out to be making the resultant image a bit transparent. 
+<table width=10%  cellspacing="55">
+<tr>
+<td width=10% align=center>
+<a href= "deadmau5.JPG">
+<img src="deadmau5.JPG" height="355" width = "455"  > </a> <br>
+Source
+
+<td width=10% align=center>
+<a href= "beach2.jpg">
+<img src="beach2.jpg" height="355" width = "495"  >  </a>
+Background
+
+<td width=10% align=center>
+<a href= "deadmau5_crude.jpg">
+<img src="deadmau5_crude.jpg" height="455" width = "595" >  </a>
+Crudely Cropped in<br>
+
+
+<td width=10% align=center>
+<a href= "deadmau5_poisson.jpg">
+<img src="deadmau5_poisson.jpg" height="455" width = "595" >  </a>
+Poisson Blended<br>
+
+<td width=10% align=center>
+<a href= "deadmau5_mixed.jpg">
+<img src="deadmau5_mixed.jpg" height="455" width = "595" >  </a>
+Mixed Blended<br>
+</table>
+
+<br> A decent result. The cat is listening very keenly to the conversation of India's PM and US' President. They are very intelligent creatures after all.
+
+<table width=10%  cellspacing="55">
+<tr>
+<td width=10% align=center>
+<a href= "cat.jpg">
+<img src="cat.jpg" height="355" width = "455"  > </a> <br>
+Source
+
+<td width=10% align=center>
+<a href= "obama.jpg">
+<img src="obama.jpg" height="355" width = "495"  >  </a>
+Background
+
+<td width=10% align=center>
+<a href= "obama_cat_crude.jpg">
+<img src="obama_cat_crude.jpg" height="455" width = "595" >  </a>
+Crudely Cropped in<br>
+
+
+<td width=10% align=center>
+<a href= "obama_cat_poisson.jpg">
+<img src="obama_cat_poisson.jpg" height="455" width = "595" >  </a>
+Poisson Blended<br>
+
+<td width=10% align=center>
+<a href= "obama_Cat_mixed.jpg">
+<img src="obama_Cat_mixed.jpg" height="455" width = "595" >  </a>
+Mixed Blended<br>
+
+</table>
+
+Not such a good result: <br>
+
+I tried to make deadmau5 swim in water, but this one didn't turn out too well with Poisson blending, the surrounding area of his head seems to have a blue aura and does not blend well with he water. The Mixed blended result does not look bad though.
+
+<table width=10%  cellspacing="0">
+<tr>
+<td width=10% align=center>
+<a href= "sea.jpg">
+<img src="sea.jpg" height="355" width = "485"  > </a> <br>
+Background
+
+<td width=10% align=center>
+<a href= "mau5_swimming_crude.jpg">
+<img src="mau5_swimming_crude.jpg" height="355" width = "495" >  </a>
+Crude Blend
+
+<td width=10% align=center>
+<a href= "mau5_swimming_poisson.jpg">
+<img src="mau5_swimming_poisson.jpg"  >  </a>
+Poisson Blending
+
+<td width=10% align=center>
+<a href= "mau5_swimming_mixed.jpg">
+<img src="mau5_swimming_mixed.jpg"  >  </a>
+Mixed Blended
+</table>
+
+Another fail result:
+The penguin did not seem to like the desert, and turned sandy in color in protest. The backgrounds must be similar for these blending algorithms to work, otherwise the source gradient is not preserved well as seen here.
+
+<table width=10%  cellspacing="10">
+<tr>
+<td width=10% align=center>
+<a href= "penguin.jpg">
+<img src="penguin.jpg"  > </a> <br>
+Source
+
+<td width=10% align=center>
+<a href= "beach.jpg">
+<img src="beach.jpg" height="455" width = "595"  >  </a>
+Background
+
+<td width=10% align=center>
+<a href= "penguin_bad_poisson.jpg">
+<img src="penguin_bad_poisson.jpg"  >  </a>
+Poisson Blending
+
+<td width=10% align=center>
+<a href= "penguin_bad_mixed.jpg">
+<img src="penguin_bad_mixed.jpg"  >  </a>
+Mixed Blended
+
+</table>
+
+Another pretty bad result. The turtle adopts a weird sandy color due to mismatch of colors.
+
+<table width=10%  cellspacing="55">
+<tr>
+<td width=10% align=center>
+<a href= "turtle.jpg">
+<img src="turtle.jpg"  >  </a> <br>
+Source
+
+<td width=10% align=center>
+<a href= "beach.jpg">
+<img src="beach.jpg" height="455" width = "595" >  </a> <br>
+Background
+
+<td width=10% align=center>
+<a href= "turtle_crude_crop.jpg">
+<img src="turtle_crude_crop.jpg"  >  </a> <br>
+Crude crop
+
+<td width=10% align=center>
+<a href= "turtle_poisson.jpg">
+<img src="turtle_poisson.jpg"  >  </a> <br>
+Poisson Blended
+
+<td width=10% align=center>
+<a href= "turtle_mixed.jpg">
+<img src="turtle_mixed.jpg"  >  </a> <br>
+Mixed Blended
+
+</table>

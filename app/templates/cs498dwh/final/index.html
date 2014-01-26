@@ -1,0 +1,317 @@
+<h1><font color="DarkOliveGreen "> Image Analogies </font><br>
+<b><font size = '4' color="DarkOliveGreen ">- Final Project<br></h1></b>
+ Grace Goo<br>
+Suraj Modi <br>
+Siddhartha Gupta <br> </b> <br> </font>
+The 3 of us found the topic of Image Analogies described in the paper<sup>1</sup> to be very intriguing, and decided to take up this challenging project. <br>
+A computer vision field that has come into prominence in the past few years is that of <b><font color="DarkGreen">NPR (non-photorealistic rendering)</font></b>, the creation of artistic styles by computer. A past project covered this in the B&W but we hadn't been able to attempt it, so we were keen to try it out with this project. Another cool effect that particularly fascinated us was the 'Texture by numbers' effect, where a scenic image is represented by a simple two or three color hand painted image. E.g. a path in a field represented by blue and dark red respectively, and then the scene is changed by simply repainting the image. (Repainting the blue to a circular blue, which renders a circular path, as shown below)
+
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "A.jpg">
+<img src="A.jpg" height="355" width = "485"  > </a> 
+
+<td width=10% align=center>
+<a href= "A'.jpg">
+<img src="A'.jpg" height="355" width = "495" >  </a>
+</table>
+
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "B.jpg">
+<img src="B.jpg" height="355" width = "485"  > </a> <br>
+
+<td width=10% align=center>
+<a href= "B'.jpg">
+<img src="B'.jpg" height="355" width = "495" >  </a>
+</table>
+
+<h3> Application</h3> 
+The advantage of Image Analogies is the ease of image transformations, instead of a user needing to specify complex filters and algorithms, he can simply provide a training pair of images and generate the same effect for any other image. It is also useful for someone who has no experience with image filtering, however with an Image Analogies API, he could apply a filter to a target image.
+
+<h3> Algorithm</h3> 
+Two images are taken, A and A', where A' is a filtered version of A, e.g. blurring, embossing, sketch, and the same effect is derived from the pair of images and applied to a new image B, to come up with the result B'.
+Feature matrices are initially calculated for the three input images, which consist of R, G, B and Y, where RGB are self-explanatory and Y is the 'luma' component from the YIQ color space. The feature matrices are essential in the matching algorithms. <br><br>
+
+<b> <font color="SaddleBrown   "> Approach 1: Regular and Binary Search - pixel by pixel</b> <br> </font>
+Pixels from B are looped through in scan line order, and for each pixel, a best search algorithm is employed to find its best match in A. Two methods were tried:
+<br> A brute force search going through each pixel of A, which took a noticeably long time, and a Binary search method which took lesser time comparatively. The binary search looked for the least difference between pair of pixels in A and B using the feature matrices (using sum of least squares to compute difference between 2 pixels), and returned the closest match:
+<br><br>
+ <b><div align="center">bestDiff = bestDiff + sum(sum(((A(mid,i) - Bpixel(i)).^2))); </div></b>
+<br><br>
+Once the pixel 'index' is retrieved, the respective pixel from A' (the filtered example image) is copied to B'.
+<br><br><b><div align="center">
+ Bprime(i,j,1) = featureAp(index,1);<br>
+ Bprime(i,j,2) = featureAp(index,2);<br>
+ Bprime(i,j,3) = featureAp(index,3);</b></div>
+
+<font color="SaddleBrown   ">  <br><b>Approach 2: ANN Search using patch of 5x5: <br> </font></b>
+Now that we have already tried finding the nearest pixel, we modify the algorithm to build features based on a 5X5 patch instead of just 1 pixel at a time. We also multiply Gaussian weights to emphasize the middle pixels. Once we define the patch we build feature matrices for the images based on the patches and then apply the nearest neighbor search algorithm to populate the resulting image pixels. We have a used a simple open-source search algorithm and have not used the k-d tree implementation. The results turned out to be far better than the pixel by pixel algorithm but it took much longer. <br>
+
+Code snippet: <br><br>
+
+<font color="green"> % Applying Weights to the feature Matrix for A <br> </font>
+for count=1:size(featureA,2)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;featureA(:,count) = featureA(:,count).*weightMatrixA; <br>
+end <br>
+<font color="green">% Adding pixels to the previously generated pad for featureB<br></font>
+for x = 1:size(imageB,1)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;for y = 1:size(imageB,2)<br>
+<font color="green"> % Builinding pad fot the featureMatrix Bprime to avoid egde cases<br></font>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+paddedfeatureBp = padarray(imageBp,[2 2], 0);<br>
+   
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+windowB = zeros(5,5,size(imageA,3));<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+windowBp = zeros(5,5,size(imageAp,3));<br>
+   
+ <font color="green">   % traversing over the window to add the pixels from the padded feature<br> </font>
+   <font color="green"> % matrix of b and bprime<br> </font>
+    for i=0:4<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;for j=0:4<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;windowB(i+1,j+1,:) = paddedfeatureB(x+i,y+j,:);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;windowBp(i+1,j+1,:) = paddedfeatureBp(x+i,y+j,:);<br>
+      &nbsp;&nbsp;&nbsp;  end<br>
+    end<br>
+   
+    windowBp = windowBp(repmat(mask, [1 1 size(imageAp,3)]));<br>
+   
+<font color="green">    % once the pixels are added and the window is tiled, we do the nearest<br> </font>
+<font color="green">    % neighbor search for adding pixels to bprime<br> </font>
+   
+    for i=1:size(imageAp,3)<br>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; windowB(:,:,i) = windowB(:,:,i).*gaussianFilter;<br>
+    end<br>
+    windowB = [windowB(:); (windowBp.*weightMatrixAp).*(meanA/meanAp)];<br>
+   
+ <font color="green">   % Getting the nearest neighbor the slow way<br> </font> 
+     dists = L2_distance(windowB, dataSet);<br>
+     [~, result] = min(dists);<br>
+             
+    [xA yA] = ind2sub(Asize, result);<br>
+
+    imageBp(x, y, :) = imageAp(xA, yA,:);<br>
+  end<br>
+  fprintf('Finished row %d\n', x);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;end<br>
+end<br>
+</div><br>
+
+
+For the ANN algorithm over the patch of 5x5, we had help from a project online.<sup>3</sup><br>
+
+The algorithm will work for most image filters, however it cannot be expected to learn and simulate all possible image filters, especially with only one training pair, as the paper says.
+
+<h3> Results</h3> 
+
+The ANN algorithm with a patch of 5x5 yielded good results: (Images taken from NYU Media Research Lab<sup>2</sup>) <br> <br>
+
+<b>Oil Pastel:</b>
+
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "river.jpg">
+<img src="river.jpg" height="355" width = "495"  >  </a> <b>Van Gogh's 'Starry Night above the Rhone'</b>
+
+<td width=10% align=center>
+<a href= "riverprime.jpg">
+<img src="riverprime.jpg" height="355" width = "495" >  </a><b>Filtered Image A'</b> 
+</table>
+
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "boat.jpg">
+<img src="boat.jpg" height="355" width = "495">  </a> <b>B</b>
+
+<td width=10% align=center>
+<a href= "final_boat.jpg">
+<img src="final_boat.jpg"height="355" width = "495" > </b></a> <b>B' </b> Result Image 
+</table>
+
+The pixel by pixel binary search yielded a greenish image, it does seem to have the effect though:
+
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "boat.jpg">
+<img src="boat.jpg" height="355" width = "495"> </a>  <b>B</b>
+
+<td width=10% align=center>
+<a href= "boat-bad.jpg">
+<img src="boat-bad.jpg"height="355" width = "495" >  </a> <b>B'</b>
+</table>
+
+<b>Emboss:</b>
+
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "newflower-src.jpg">
+<img src="newflower-src.jpg" height="355" width = "495"  > </a>  <b>A</b>
+
+<td width=10% align=center>
+<a href= "newflower-emboss.jpg">
+<img src="newflower-emboss.jpg" height="355" width = "495" >  </a> <b>A'</b>
+</table>
+
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "shore-src.jpg">
+<img src="shore-src.jpg" height="355" width = "495"> </a>  <b>B</b>
+
+<td width=10% align=center>
+<a href= "emboss.jpg">
+<img src="emboss.jpg"height="355" width = "495" >  </a> <b>B'</b> 
+</table>
+
+<b>Colorization:</b>
+
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "tree.jpg">
+<img src="tree.jpg" height="355" width = "495"  > </a>  <b>A</b>
+
+<td width=10% align=center>
+<a href= "tree2.jpg">
+<img src="tree2.jpg" height="355" width = "495" >  </a> <b>A'</b>
+</table>
+
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "tree3.jpg">
+<img src="tree3.jpg" height="355" width = "495"> </a>  <b>B</b>
+
+<td width=10% align=center>
+<a href= "tree_finalcolored.jpg">
+<img src="tree_finalcolored.jpg"height="355" width = "495" >  </a>  <b>B'</b>
+</table>
+
+
+<b>Texture by Numbers:</b>
+
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "exa.jpg">
+<img src="exa.jpg" height="355" width = "495"  > </a>  <b>A</b>
+
+<td width=10% align=center>
+<a href= "exaa.jpg">
+<img src="exaa.jpg" height="355" width = "495" >  </a>  <b>A'</b>
+</table>
+
+
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "exb.jpg">
+<img src="exb.jpg" height="355" width = "495"> </a>  <b>B</b>
+
+<td width=10% align=center>
+<a href= "arch_ann.jpg">
+<img src="arch_ann.jpg"height="355" width = "495" >  </a>  B' with patch of 5x5
+</table> 
+
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "exb.jpg">
+<img src="exb.jpg" height="355" width = "495"> </a> 
+
+<td width=10% align=center>
+<a href= "arch_final.jpg">
+<img src="arch_final.jpg"height="355" width = "495" ></a> B' with pixel by pixel search: 
+</table>
+
+
+<b>Watercolor: <br></b>
+This one turned out well, except the pixelation, which might be because we enlarged the image to show it better (We couldn't run the algorithm on large images due to it taking a lot of time) 
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "apple.jpg">
+<img src="apple.jpg" height="355" width = "495"  > </a> 
+
+<td width=10% align=center>
+<a href= "appleprime.jpg">
+<img src="appleprime.jpg" height="355" width = "495" >  </a>
+</table>
+
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "grad.jpg">
+<img src="grad.jpg" height="355" width = "495"> </a> 
+
+<td width=10% align=center>
+<a href= "grad-water-color.JPG">
+<img src="grad-water-color.JPG"height="355" width = "495" >  </a>
+</table>
+
+<h3> Difficulties</h3> 
+
+We couldn't perfect the pixel by pixel binary search method, the filtering effect seemed to be present in B', however the result image took up a weird color tone entirely. Also, results were not in accordance where where there were very subtle effects, such as line sketches:
+
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "girl.jpg">
+<img src="girl.jpg" height="355" width = "365"  > </a> 
+
+<td width=10% align=center>
+<a href= "na-girl.jpg">
+<img src="na-girl.jpg" height="355" width = "365" >  </a>
+</table>
+
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "uiuc-quad.gif">
+<img src="uiuc-quad.gif" height="355" width = "365"> </a> 
+
+<td width=10% align=center>
+<a href= "uiuc-quad_gif.jpg">
+<img src="uiuc-quad_gif.jpg" height="355" width = "365" >  </a>
+The sky isn't sketchy as it should be.
+</table>
+
+<br>
+
+<br> Texture transfer did not work:
+
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "girl.jpg">
+<img src="girl.jpg" height="355" width = "365"  > </a> 
+
+<td width=10% align=center>
+<a href= "fabricgirl.jpg">
+<img src="fabricgirl.jpg" height="355" width = "365" >  </a>
+</table>
+
+<table width=10%  cellspacing="35">
+<tr>
+<td width=10% align=center>
+<a href= "suraj.jpg">
+<img src="suraj.jpg" height="355" width = "395"> </a> 
+
+<td width=10% align=center>
+<a href= "suraj-fail.jpg">
+<img src="suraj-fail.jpg"height="355" width = "395" >  </a>
+</table>
+
+<br> <br> <br> 
+<sup>1 </sup><a href ="http://www.mrl.nyu.edu/publications/image-analogies/">Image Analogies</a> A. Hertzmann, C. Jacobs, N. Oliver, B. Curless, D. Salesin. SIGGRAPH 2001 Conference Proceedings.<br>
+
+<sup>2 </sup><a href ="http://www.mrl.nyu.edu/projects/image-analogies/index.html">NYU Media Research Lab</a> <br>
+
+<sup>3 </sup><a href ="http://www.cs.uky.edu/~jacobs/classes/2011_photo/projects/04_analogies/index.html">CS UKY- Image Analogies</a>

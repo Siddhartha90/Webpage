@@ -1,0 +1,32 @@
+<html>
+  
+  <head>
+    <title>{{title}} - About Me</title>
+  </head>
+
+  <body>
+    <div> 
+      <a href="{{ url_for('index') }}">Sid's Profile</a>
+      {% if g.user.is_authenticated() %}
+        | <a href="{{ url_for('user', nickname = g.user.nickname) }}">Your Profile</a>
+        | <a href="{{ url_for('logout') }}">Logout</a>
+      {% endif %}
+    </div>
+    <hr>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+	  <ul>
+	  {% for message in messages %}
+	      <li>{{ message }} </li>
+	  {% endfor %}
+	  </ul>
+	  {% endif %}
+	  {% endwith %}
+
+    <!-- hr puts a line -->
+    <!-- block gets printed by whoever is inheriting this template -->
+    {% block content %}{% endblock %}
+    
+
+  </body>
+</html>

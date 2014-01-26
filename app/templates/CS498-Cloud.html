@@ -1,0 +1,101 @@
+{% extends "upperJSrow_template.html" %}
+
+<!-- Start of block -->
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Siddhartha Gupta</title>
+</head>
+
+<body>
+
+<div class="container">
+    
+        <h2 >Cloud Computing</h2> 
+	
+	One of my favorite classes, that I took in my last semester of college. 
+
+	
+<br><br>
+    <b>Project: Dataset analytics using Mahout/Hadoop</b>
+
+<br><br>
+
+    Apache Mahout is a machine learning library scalable to large data sets. It’s well documented and explained with examples online, and consists of a number of algorithms for filtering, classification, clustering, pattern mining, and others. 
+
+<br><br>
+
+<b>The Dataset:</b>
+
+<br>
+We found a dataset online courtesy GroupLens research lab (Dept. of Computer Science, University of Minnesota), who collect rating data sets from the MovieLens web site and make it publicly available. Our dataset consists of 1 million ratings on 4000 movies as rated by 6000 users. There was a 100k and a 10M dataset available as well, so we decided to go with the middle size. The file containing the data was in the format:
+
+UserID::Movienumber::rating::timestamp
+
+<br><br>
+<b>Algorithms Used:</b>
+
+<br>
+<br>
+Collaborative Filtering using Taste
+
+<br>
+We decided to implement collaborative filtering and recommenders since they are used extensively in the real world, e.g. Amazon and Ebay which recommend products for its users based on their past purchases and views, as well as items frequently bought with certain other items. Mahout provides a filtering engine called ‘Taste’ which, given a data model can produce recommendations. Taste can analyze datasets in multiple ways, so a dataset can have users displaying a preference level for a certain item (such as between for 1 and 5 for books), or a Boolean rating (such as if a web page has been visited previously by the user). There are 3 recommenders in Taste, and we implemented User-based and the Slope-one recommenders. use the slope-one recommendation API provided by Mahout, and 
+
+<br><br>
+
+We wrote a python script to convert the text file containing the data to a mahout datafile format, which is values separated by commas(CSV) or tabs(TSV). We converted to CSV:
+
+
+<!-- Code Highlighting thru: http://markup.su/highlighter/
+
+
+ <pre style="background:#211e1e;color:#dadada">def main():
+   myfile <span style="color:#47b8d6">=</span> open(<span size = 100 style="color:#ad9361; font-size: 8pt">'words.txt'</span>, <span style="color:#ad9361; font-size: 8pt">'r'</span>)
+   outfile <span style="color:#47b8d6">=</span> open(<span style="color:#ad9361; font-size: 8pt">'wordsoutput.txt'</span>, <span style="color:#ad9361; font-size: 8pt">'w'</span>)
+   <span style="color:#6969fa;font-weight:700; font-size: 8pt">for</span> line <span style="color:#47b8d6; font-size: 8pt">in</span> myfile:
+      line_list <span style="color:#47b8d6; font-size: 8pt">=</span> line.split(<span style="color:#ad9361">'::'</span>)
+      new_line <span style="color:#47b8d6; font-size: 8pt">=</span> <span style="color:#ad9361">','</span>.join(line_list[:<span style="color:#47b8d6; font-size: 8pt">-</span><span style="color:#ccc; font-size: 8pt">1</span>])
+      outfile.write(new_line)
+      outfile.write(<span style="color:#ad9361">'<span style="color:#afa472; font-size: 8pt">\n</span>'</span>)
+                        
+main()
+</pre>
+-->
+
+<br>
+	 <img src="static/images/CS498-Cloud/CSV.png" > </a> <br>
+
+ <a href= "https://gist.github.com/Siddhartha90/8626071"> (Gist) </a>
+
+<br><br>
+
+We got rid of the timestamp field, it’s optional, and in our case it wasn’t of much use. 
+
+
+<br>
+
+Once we got the results (attached alongside result.txt), we wrote another script to pull out that movie from the movies.dat file:
+
+	 <img src="static/images/CS498-Cloud/movies.png" > </a> <br>
+
+ <a href= "https://gist.github.com/Siddhartha90/862614"> (Gist) </a>
+
+</div>
+
+</body>
+</html>
+
+The final result is attached alongside (finalrecos.txt) (only for 100 users). A bit more scripting pulled out the most frequently recommended movie which in this case was 
+Mamma Roma (1962).
+
+
+Comments/Difficulties faced:
+
+Getting used to Mahout took a fair amount of time. There were some tutorials and examples online, and a helpful wiki, but they differed with one another and there were a lot of versions of Mahout on the download page. We worked with the latest one initially (0.7), but it had a slightly different format than what people seemed to be using online. (e.g. It didn’t have a taste-web folder) We tried using an earlier version (0.5), and eventually got the built-in examples to work. We reverted back to the 0.7 version, One thing we were overlooking was changing the pom.xml file in the new project or original Mahout directory, which led to the project unable to find the taste package and associated files. 
+
+
+<!-- End of block -->
+{% endblock %}

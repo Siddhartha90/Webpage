@@ -1,0 +1,37 @@
+{% extends "upperJSrow_template.html" %}
+
+<!-- Start of block -->
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Siddhartha Gupta</title>
+</head>
+
+<body>
+
+<div class="container">
+    
+        <h2 >Embedded Systems</h2> 
+	
+	One of my favorite projects, ball balancing on a touchscreen board through low level C programming to interact with a microcontroller (dsPIC33f). Position was set through a joystick, and PID Control enabled the ball to move into the location. PID Control is: <br> <br>
+<b> Proportional -  </b> This is what drives the ball towards its destination coordinates. <br>
+<b> Integral - </b> If the ball does get stuck at a point, Integral (sum of instantaneous error over time) builds up and gives the ball a jump.<br>
+<b> Derivative - </b> This decelerates the ball as it approaches its destination, thus preventing from overshooting too far and eventually the ball converges to its destination. <br> <br>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/XP2lOKLxvqU" frameborder="0" allowfullscreen></iframe> <br> <br>
+
+The hours spent in lab were rewarding, and especially helped me learn how to work with long complicated datasheets (My previous experience with datasheets was limited to a bit with Arduino and i8259 PIC). 
+   
+</div>
+
+
+
+
+</body>
+</html>
+
+
+<!-- End of block -->
+{% endblock %}

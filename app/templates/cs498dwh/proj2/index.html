@@ -1,0 +1,84 @@
+<h1> Image Quilting<br>
+</h1>
+
+<h2> - Siddhartha gupta<br>
+</h2>
+
+<h3>Random and Overlapping methods of Texture image generation</h3> 
+
+<h4> Examples </h4> 
+For the randomly sampled texture, we randomly select a patch of specified size patchsize which leads to crude image. This can be improved by finding the next patch using a previous patch using a certain part of the patch as overlap, and then finding the Sum of squared difference between the patch and texture to find the best possible patch. The filter operation is used to calculate the ssd. This does not always turn out well, as you can see in the images below, but is still better than randomly sampling.<br> <br>
+
+<table width=10%  cellspacing="55">
+<tr>
+<td width=10% align=center>
+<img src="bricks_small.jpg" height="355" width = "485"  > </a> <br>
+
+<td width=10% align=center>
+<a href= "bricks_small_random.jpg">
+<img src="bricks_small_random.jpg"  >  </a>
+Random
+
+<td width=10% align=center>
+<a href= "bricks_small_overlap.jpg">
+<img src="bricks_small_overlap.jpg" height="355" width = "495" >  </a>
+Overlap <br>
+
+</table>
+
+<table width=10%  cellspacing="55">
+<tr>
+<td width=10% align=center>
+<a href= "banana.jpg">
+<img src="banana.jpg"  >  </a> <br>
+<td width=10% align=center>
+<a href= "banana_random.jpg">
+<img src="banana_random.jpg"  >  </a> <br>
+Random sampling
+
+<td width=10% align=center>
+<a href= "banana_overlap.jpg">
+<img src="banana_overlap.jpg"  >  </a> <br>
+Sampling with overlap 
+
+</table>
+
+<table width=10%  cellspacing="0">
+<tr>
+<td width=10% align=center>
+<a href= "squiggly.jpg">
+<img src="squiggly.jpg" height="355" width = "485"  > </a> <br>
+
+
+<td width=10% align=center>
+<a href= "squiggly_overlap.jpg">
+<img src="squiggly_overlap.jpg" height="355" width = "495" >  </a>
+Random sampling
+
+<td width=10% align=center>
+<a href= "squiggly_random.jpg">
+<img src="squiggly_random.jpg"  >  </a>
+Overlap
+
+</table>
+
+<table width=10%  cellspacing="10">
+<tr>
+<td width=10% align=center>
+<a href= "lemon.png">
+<img src="lemon.png" height="355" width = "485"  > </a> <br>
+
+<td width=10% align=center>
+<a href= "lemon_random.jpg">
+<img src="lemon_random.jpg"  >  </a>
+Random
+
+<td width=10% align=center>
+<a href= "lemon_overlap.jpg">
+<img src="lemon_overlap.jpg" height="355" width = "425" >  </a>
+Overlap
+
+</table>
+
+
+

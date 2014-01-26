@@ -1,0 +1,171 @@
+/*Style Sheet Sartaj Grewal 2013*/
+
+
+/*Major parts of the website*/
+body{margin: 0;padding: 0; border:0; }
+h4{ font-family: Palatino;}
+p{font-family: Arial; font-size:14px;margin-top:15px;}
+ul{	list-style-type: none;}
+a {text-decoration: none;color:#1589FF;cursor:pointer;}
+img{ margin-top:40px;}
+
+
+/*All the boxes*/
+.name{   
+	position : relative;  height:80px;
+	margin: 0; padding: 10px 150px 0px 150px;
+	border-color : #181818; border-width: 1px; border-style:solid; 
+	background-color:#181818; 
+	font-family: Palatino; color: #606060;
+}
+.MyName{ 
+	position: relative; 
+	color: #3399FF;
+	 
+}
+span {
+  position: relative; top:-2px;
+  text-align:right;
+  color: #606060;
+  font-size: 8px;
+}
+
+/*Menu borders*/
+.m2{border-top-color : #FFFFFF; border-top-width: 1px; border-top-style:groove;}
+.m3{border-top-color : #FFFFFF; border-top-width: 1px; border-top-style:groove;}
+.m4{border-top-color : #FFFFFF; border-top-width: 1px; border-top-style:groove;}
+.m5{border-top-color : #FFFFFF; border-top-width: 1px; border-top-style:groove;}
+
+/*Positioning of the elements in the upper bar*/
+
+.l1{ position: absolute; right: 550px; top: 14px;height:50px;}
+.l2{ position: absolute; right: 350px;top: 14px;}
+.l3{ position: absolute; right: 150px;top: 14px;color: #66af33;}
+
+
+.l1_content {
+	height: 295px; width:250px;
+	padding-top:20px; 
+	background-color:rgba(255,255,255,0.7);
+	position : absolute; left:-100px; top:18px;
+	text-align:center;
+	border-color : #FFFFFF; border-width: 1px; border-style:groove;
+}
+.l1_content li{
+	position : relative;left: -22px;
+	height: 53px; width:250px; 
+	padding-top:20px; margin:0px;
+	color: #181818; 
+
+}
+
+.container{ 
+	margin: 0; padding: 0 150px 0px 150px;
+	font-family: Helvetica;
+	background-color:#FFFFFF;
+	padding-bottom:50px; padding-top:30px;
+}
+.credits{margin: 0; padding: 0 150px 0px 150px;
+		color: #606060  ;  
+}
+
+/*Hover Effects*/
+.MyName:hover{ 
+	cursor: pointer ;
+	-webkit-transition: ease 1s;
+  -moz-transition: ease 1s;
+    -o-transition: ease 1s;
+ 	-ms-transition: ease 1s;
+    transition: ease 1s;
+}
+.l1:hover{color: #D8D8D8;
+cursor: pointer ;
+  -webkit-transition: ease 0.2s;
+  -moz-transition: ease 0.2s;
+    -o-transition: ease 0.2s;
+ 	-ms-transition: ease 0.2s;
+    transition: ease 0.2s;
+}  
+.l2:hover{color:#D8D8D8;
+cursor: pointer ;
+  -webkit-transition: ease 0.2s;
+  -moz-transition: ease 0.2s;
+    -o-transition: ease 0.2s;
+ 	-ms-transition: ease 0.2s;
+    transition: ease 0.2s;
+}
+.l3:hover{color: #D8D8D8;
+cursor: pointer ;
+  -webkit-transition: ease 0.2s;
+  -moz-transition: ease 0.2s;
+    -o-transition: ease 0.2s;
+ 	-ms-transition: ease 0.2s;
+    transition: ease 0.2s;
+}
+
+
+
+.l1:hover span{
+  -webkit-transition: ease 0.2s;
+  -moz-transition: ease 0.2s;
+    -o-transition: ease 0.2s;
+ 	-ms-transition: ease 0.2s;
+    transition: ease 0.2s;
+  color: #D8D8D8;
+cursor: pointer ;
+}
+
+.m1 strong:hover{
+color: #888888;
+cursor: pointer ;
+-webkit-transition: ease 0.5s;
+  -moz-transition: ease 0.5s;
+    -o-transition: ease 0.5s;
+ 	-ms-transition: ease 0.5s;
+    transition: ease 0.5s;
+}
+.m2 strong:hover{
+cursor: pointer ;
+color: #888888;
+-webkit-transition: ease 0.5s;
+  -moz-transition: ease 0.5s;
+    -o-transition: ease 0.5s;
+ 	-ms-transition: ease 0.5s;
+    transition: ease 0.5s;
+}
+.m3 strong:hover{
+cursor: pointer ;
+color: #888888;
+-webkit-transition: ease 0.5s;
+  -moz-transition: ease 0.5s;
+    -o-transition: ease 0.5s;
+ 	-ms-transition: ease 0.5s;
+    transition: ease 0.5s;
+}
+.m4 strong:hover{
+cursor: pointer ;
+color: #888888;
+-webkit-transition: ease 0.5s;
+  -moz-transition: ease 0.5s;
+    -o-transition: ease 0.5s;
+ 	-ms-transition: ease 0.5s;
+    transition: ease 0.5s;
+}
+
+#followIcons a  {
+display:inline-block;
+width:48px;
+height:48px;
+text-indent:-3000px;
+background-position:0 0;
+background-repeat:no-repeat;
+z-index:2000;
+overflow:hidden;
+position:absolute;
+transition-duration: 0.8s;
+transition-property: transform;
+}
+
+/*Some extras*/
+.align-right { float:right; margin: 0 0 15px 15px; }
+.align-left { float:left; margin: 0 15px 15px 0; }

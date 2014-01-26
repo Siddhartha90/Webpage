@@ -1,0 +1,83 @@
+<head>
+<title> Distributed Systems </title>
+<h1>Distributed Systems Projects</h1>
+
+Distributed Systems provided me with a good understanding of distributed systems on the web and elsewhere, their architecture, algorithms, design and challenges. Mutual exclusion with message passing algorithms and locks, failure handling, middleware, transactions, consensus, leader election, peer to peer protocols, DHT's and Chord, MST's, graph coloring and other graph theories, multicasts were some of the concepts we dealt with. There were 2 major projects:
+
+<h2>Chord P2P Protocol </h2>
+
+A Chord system maintains a log(N) state at each node in a system of N nodes, every node has a finger table pointing to ~log(N) nodes in the system. This provides for great scalability in the system. A Chord is somewhere between a ring and a clique, a ring suffers from slow communication (O(N) messages) and a clique has high overhead due to maintaining O(N) state at each node. (which would also mean you would need O(N<sup>2</sup>) messages for failure detection) <br> <br>
+
+<table>
+<tr>
+<td width=10% align=center>
+<img src="ring.png" > </a> <br>
+Ring
+
+<td width=10% align=center>
+<img src="clique.png" > </a> <br>
+Clique
+
+</table> <br>
+
+A chord on the other hand looks like: <br> <br>
+
+<table>
+<tr>
+<td width=10% align=center>
+<img src="chord.png" > </a> <br>
+Chord
+
+</table> <br>
+
+Files are placed at nodes via a hashing mechanism (SHA-1). Files are looked-up at a node by using the formula n + 2<sup>i</sup>(mod2<sup>m</sup>). 'm' is made just large enough to prevent 2 files hashing to the same key (m=7 in the figure) . If a user therefore ends up at node 80 looking for a file called "presentation.doc" (which has been placed at node 112), it'll send a query to largest node <=102 (96 in this case) via its finger table entry, and 96 will then point the user to its next node (112) which holds the file. <br> <br>
+<b>Advantages of the Chord system:</b> <br>
+
+If you realize in the above example, at each finger table entry and node jump, distance between start and destination node decreases by a power of 2. Search therefore takes <b>O(logN)</b> time. <br>
+Upon addition of a new node (eg A new user decides to host a file on Napster), only a small fraction of nodes of the system are have to update their finger tables. Similarly, when a node leaves, only a fraction of the pointers have to be adjusted.
+Addition or deletion of a file takes log(N) time as well, using the same routing mechanism. <br> <br>
+
+A major issue with P2P systems is the high rate of 'churn' (frequent node joins, leaves, failures). Successor and fingers therefore need to be constantly updated. A stabilization protocol was placed to deal with this where every node periodically talked to its neighbors to update its finger table. <br> <br>
+
+<a href="https://github.com/Siddhartha90/Chord-Protocol-Routing-System.git"> Check out the Code  </a> <br> <br>
+
+<h2> Distributed Chat System </h2>
+
+Multicasts are a 'one to many' broadcast within a group of processes. An example could be Air Traffic Control System multicasting information among different ATC's or Newsgroup servers multicasting to each other in a reliable and ordered manner﻿﻿﻿. Each process took an input message from a user and multicasted it to other processes. It also received messages received via multicast from other users and displayed them to the user on its own UNIX shell screen. Multiple challenges were faced:
+<ul>
+<li> Ensure reliable transmission in the face of an unreliable network </li>
+<li> Ensure causally ordered transmission </li>
+<li> Ensure multicast algorithm works despite process failures </li>
+</ul>
+
+Causal ordering ensures that messages at each process are accepted in order with respect to all senders, so if process A received process B's message and then sent a message to process C, process C will not accept this message until it receives process A's message . Such messages appearing out of order are buffered, and accepted after the intermediate messages arrive. (Other orderings include Total Ordering, where each process accepts messages in the same order as the other processes, this is a stronger ordering than causal and implies causal ordering, and FIFO ordering, where every process accepts messages from a sender in the order they were sent from the sender)
+
+<table>
+<tr>
+<td width=10% align=center>
+<img src="causal.png" > </a> <br>
+Causally ordered messages
+
+</table> <br>
+
+A message was a concatenation of an identifying variable, timestamp vector (each tuple separated by a space) and the actual message contents. At the receiving end, the timestamp was extracted from the received message by string tokenization. The identifying variable was to identify if a message was meant to be a failure detection check/response, a 'nack', or an actual message. 
+
+A 'nack' or a negative acknowledgement is sent by a process to the multicaster in case it realizes it has missed messages (by examining the timestamp), which sends the offending message to this process. The 'nack' message consists the missing message numbers. (In case a 'nack' is dropped due to network failure, the process would realize the missing message again later and sent the nack again)
+<br> <br>
+
+<b>Process Failure detection</b> was done using the "Ping-Ack" protocol: <br>
+
+<table>
+<tr>
+<td width=10% align=center>
+<img src="pingack.png" > </a> <br>
+
+</table> <br>
+
+A separate pthread was spawned at each process, which periodically (Using sleep cycles of 3 seconds) sent out a Ping messages to all the other processes part of the group and waited for an Ack from the participating processes. The Ack had to arrive within a time interval (which was set to be 2 seconds) failing which the process was declared to be dead and removed from a mutex protected bit vector. Messages were multicast only to active processes in multicast by checking this bit vector. 
+
+
+<br>
+<a href="https://github.com/Siddhartha90/Distributed-Chat-system/blob/master/mcast.c"> Check out the Code  </a> <br> <br>
+
+

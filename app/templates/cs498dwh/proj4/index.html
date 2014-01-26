@@ -1,0 +1,39 @@
+<h1> Programming Project #4<br>
+</h1>
+
+
+<h2> - Siddhartha gupta<br>
+
+Image Morphing</h2> <br>
+
+<b>My face morphing to another student's face.</b>
+
+First, the correspondence points are obtained for each image in a text file, and the images are resized. A delaunay triangulation is made out of the average points previously obtained, using the matlab command 'delaunay' which avoids skinny triangles. The two faces are then warped (using  affine transformation) into an intermediate face depending on warp_frac and dissolve_frac which are both functions of time. The triangles are then filled with the weighted avg of the two faces.
+
+<iframe width="520" height="445" src="morph_siddharthag_siyingl.gif" frameborder="0" allowfullscreen></iframe> <br>
+
+<br><br>
+The average face of the class: <br> This is simply done by finding the average shape using all the text files with the annotations, and then morphing each picture into the average shape and averaging all colors together.
+<br>
+
+<a href= "mean_face.jpg">
+<img src="mean_face.jpg" height="455" width = "485"  > </a> <br> <br>
+
+Me to average face and back: <br><br>
+
+
+<iframe width="520" height="445" src="morph_siddharthag_avg.gif" frameborder="0" allowfullscreen></iframe> <br>
+
+<br><br>
+<h3> <b>Bells & Whistles: </b></h2>
+I changed the annotation script around a bit (used less than 43 reference points, and resized the images manually) to obtain the following results.
+
+A dog changing to a monkey and back: <br><br>
+
+<iframe width="520" height="445" src="morph_dog_monkey.gif" frameborder="0" allowfullscreen></iframe> <br>
+
+
+<br> Batman to Bruce Wayne, didn't turn out so well though: <br><br>
+
+
+<iframe width="520" height="445" src="morph_bat_Bruce.gif" frameborder="0" allowfullscreen></iframe> 
