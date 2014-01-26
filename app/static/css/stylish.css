@@ -44,9 +44,9 @@ span {
 
 
 .l1_content {
-	height: 295px; width:250px;
+	height: 365px; width:250px;
 	padding-top:20px; 
-	background-color:rgba(255,255,255,0.7);
+	background-color:rgba(255,255,255,0.8);
 	position : absolute; left:-100px; top:18px;
 	text-align:center;
 	border-color : #FFFFFF; border-width: 1px; border-style:groove;

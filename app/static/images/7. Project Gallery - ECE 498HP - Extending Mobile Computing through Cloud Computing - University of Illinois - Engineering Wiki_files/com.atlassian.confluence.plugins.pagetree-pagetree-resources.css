@@ -1,0 +1,40 @@
+div.plugin_pagetree div.error {
+    padding-left: 15px;
+}
+
+div.plugin_pagetree ul.plugin_pagetree_children_list_noleftspace {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+div.plugin_pagetree ul.plugin_pagetree_children_list {
+    list-style-type: none;
+}
+
+div.plugin_pagetree ul.plugin_pagetree_children_list li, div.plugin_pagetree ul.plugin_pagetree_children_list li div.plugin_pagetree_children_container  {
+    clear: left;
+    overflow: hidden;
+    width: 100%;
+}
+
+div.plugin_pagetree ul.plugin_pagetree_children_list li .plugin_pagetree_children_content {
+    float: left;
+    width: 85%;
+}
+
+div.plugin_pagetree ul.plugin_pagetree_children_list li .plugin_pagetree_childtoggle_container {
+    float: left;
+    width: 15px;
+}
+
+.plugin_pagetree_childtoggle_container .icon-minus {
+    background: transparent url(../../../images/icons/tree_minus.gif) no-repeat scroll 0 3px;
+}
+
+.plugin_pagetree_childtoggle_container .icon-plus {
+    background: transparent url(../../../images/icons/tree_plus.gif) no-repeat scroll 0 3px;
+}
+
+.plugin_pagetree_childtoggle_container .icon-square {
+    background: transparent url(../../../images/icons/tree_square.gif) no-repeat scroll 0 3px;
+}

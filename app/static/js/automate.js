@@ -54,6 +54,14 @@ $(document).ready(function() {
         $(".credits").fadeOut(1000, redirectPage);      
     });
 
+    $(".Cloud-ComputingII").click(function(event){
+        event.preventDefault();
+        linkLocation = "Cloud-ComputingII";
+        $(".container").fadeOut(fadeout_container, redirectPage);
+        $(".links").fadeOut(1000, redirectPage);
+        $(".credits").fadeOut(1000, redirectPage);      
+    });    
+
     $(".MyName").click(function(event){
         event.preventDefault();
         linkLocation = "Sid";

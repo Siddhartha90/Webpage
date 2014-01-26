@@ -24,3 +24,6 @@ def CS498():
 @app.route('/Cloud-Computing')
 def CS498():
     return render_template('CS498-Cloud.html')
+@app.route('/Cloud-ComputingII')
+def CS498():
+    return render_template('CS498-Cloud2.html')
